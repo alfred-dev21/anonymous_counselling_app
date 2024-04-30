@@ -1,18 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg1"
     tools:context=".StartActivity">
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Anonymous Counselling"
+        android:textColor="@color/sea_foam"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="80sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="This is a community where your voice matters more
+than your identity. You get help and listened to without fear of any judgement.
+Join us, if you have not yet register you account and be heard."
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginHorizontal="50sp"
+        android:layout_below="@id/heading"
+        android:layout_marginTop="100sp"
+        android:textStyle="italic|bold"
+        android:textColor="@color/wave"
+        android:textSize="16dp"
+        android:layout_centerHorizontal="true"/>
+
+
+    <Button
+        android:id="@+id/to_login"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="50sp"
+        android:layout_marginTop="400sp"
+        android:backgroundTint="@color/white"
+        android:onClick="toLoginPage"
+        android:text="Sign in"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button"
+        android:text="Register"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="50sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/wave"
+        android:textColor="@color/black"
+        android:id="@+id/to_registration"
+        android:layout_below="@id/to_login"
+        android:layout_marginTop="30sp"
+        android:onClick="toRegistrationPage"/>
+
+
+
+
+</RelativeLayout>
