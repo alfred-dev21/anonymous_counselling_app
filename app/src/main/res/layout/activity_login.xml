@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".LoginActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="50sp"
+        android:layout_marginVertical="70sp"
+        android:background="@drawable/rounded_corner">
+
+        <TextView
+            android:id="@+id/login_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="50sp"
+            android:text="Login"
+            android:textColor="@color/ocean"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/login_slogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_heading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="10dp"
+            android:text="Login to your account and receive
+ or give anonymous counselling"
+            android:textAlignment="center"
+            android:textColor="@color/wave"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/client_username"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:layout_below="@id/login_slogan"
+            android:layout_marginHorizontal="20sp"
+            android:layout_marginTop="53dp"
+            android:background="@drawable/rounded_corner"
+            android:drawableStart="@drawable/email_white"
+            android:drawablePadding="20sp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="10sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <EditText
+            android:id="@+id/client_password"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:layout_below="@+id/client_username"
+            android:layout_marginHorizontal="20sp"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/rounded_corner"
+            android:drawableLeft="@drawable/password_white"
+            android:drawablePadding="20sp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="10sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/forgot_pass_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/client_password"
+            android:layout_marginVertical="30sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="61dp"
+            android:text="Don't have an account?"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/client_password"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="30sp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="58dp"
+            android:layout_toEndOf="@+id/forgot_pass_tag"
+            android:onClick="toRegistration"
+            android:text="Register"
+            android:textColor="#FF9800"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/login_button"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:layout_below="@+id/forgot_pass_tag"
+            android:layout_marginHorizontal="25sp"
+            android:layout_marginTop="30sp"
+            android:backgroundTint="@color/wave"
+            android:text="Sign in"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="loginUser"/>
+    </RelativeLayout>
+</RelativeLayout>
