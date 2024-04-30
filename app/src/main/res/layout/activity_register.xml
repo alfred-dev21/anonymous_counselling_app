@@ -1,9 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/b2"
     tools:context=".RegisterActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="40sp"
+        android:layout_marginVertical="40sp"
+        android:background="@drawable/rounded_corner"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textColor="@color/ocean"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:id="@+id/register_tag"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="50sp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:background="@drawable/rounded_corner"
+            android:id="@+id/user_username"
+            android:hint="Username"
+            android:drawableLeft="@drawable/person_white"
+            android:drawablePadding="20sp"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:padding="10sp"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="20sp"
+            android:layout_below="@+id/register_tag"
+            android:layout_marginTop="50sp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:background="@drawable/rounded_corner"
+            android:id="@+id/user_email"
+            android:hint="Email"
+            android:drawableLeft="@drawable/email_white"
+            android:drawablePadding="20sp"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:padding="10sp"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="20sp"
+            android:layout_below="@+id/user_username"
+            android:layout_marginTop="50sp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:background="@drawable/rounded_corner"
+            android:id="@+id/user_password"
+            android:hint="Password"
+            android:textColor="@color/white"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/password_white"
+            android:drawablePadding="20sp"
+            android:textColorHint="@color/white"
+            android:padding="10sp"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="20sp"
+            android:layout_below="@+id/user_email"
+            android:layout_marginTop="50sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_type_tag"
+            android:text="User Type:"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/user_password"
+            android:layout_marginTop="20sp"
+            android:layout_marginLeft="20sp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_group"
+            android:layout_below="@+id/user_type_tag"
+            android:layout_marginHorizontal="20sp"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seeking counselling"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/radioBtn1"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offering counselling"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/radioBtn2"/>
+        </RadioGroup>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Button"
+            android:text="Register"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:backgroundTint="@color/wave"
+            android:textColor="@color/black"
+            android:layout_below="@+id/radio_group"
+            android:layout_marginHorizontal="20sp"
+            android:onClick="registerUser"
+            android:id="@+id/register_user"
+            android:layout_marginVertical="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account?"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginLeft="20sp"
+            android:layout_below="@+id/register_user"
+            android:id="@+id/already_have_account_tag"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="#FF9800"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/already_have_account_tag"
+            android:layout_below="@+id/register_user"
+            android:onClick="toLoginScreen"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
