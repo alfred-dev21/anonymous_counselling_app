@@ -67,15 +67,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                assert response.body() != null;
-                                Toast.makeText(LoginActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                    runOnUiThread(() -> {
+                        try {
+                            assert response.body() != null;
+                            Toast.makeText(LoginActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                     });
                 }
