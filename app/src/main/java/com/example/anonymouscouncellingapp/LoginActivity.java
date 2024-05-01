@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.client_username);
         password = findViewById(R.id.client_password);
         client = new OkHttpClient();
+
 
     }
 
