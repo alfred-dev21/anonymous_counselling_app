@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,8 +23,10 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ProblemSelectActivity extends AppCompatActivity {
@@ -43,11 +46,74 @@ public class ProblemSelectActivity extends AppCompatActivity {
         searchView = findViewById(R.id.searchBar);
         listView = findViewById(R.id.list_item);
         problems = new ArrayList<>();
+        doneBtn = findViewById(R.id.doneBtn);
 
         Request request = new Request.Builder()
                 .url(PROBLEMS_PHP)
                 .build();
 
+        listItemsOnListView(request);
+        setUpSearchView(searchView);
+
+        doneBtn.setOnClickListener(view -> {
+            saveCheckedUserItems(listView, adapter);
+        });
+
+    }
+
+    /**
+     * This method will make a request to the sever to store user problems on their specific database
+     * But the link to that query is yet to be done
+     * @param listView
+     * @param adapter
+     */
+    private void saveCheckedUserItems(ListView listView, ArrayAdapter<String> adapter) {
+        FormBody.Builder formbuilder = new FormBody.Builder();
+
+        SparseBooleanArray checked = listView.getCheckedItemPositions();
+        for (int i = 0; i < checked.size(); i++){
+            if (checked.valueAt(i)){
+                formbuilder.add(String.valueOf(i), adapter.getItem(checked.keyAt(i)));
+            }
+        }
+
+        RequestBody requestBody = formbuilder.build();
+
+        Request request = new Request.Builder()
+                .url("#")
+                .post(requestBody)
+                .build();
+
+        // TODO: create a php file that will store these items in a database
+    }
+
+    /**
+     * This a search view that allows users to search items of the list of problems
+     * This method sets it up and ensures that it is usable.
+     * @param searchView
+     */
+    private void setUpSearchView(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ProblemSelectActivity.this.adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ProblemSelectActivity.this.adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
+
+    /**
+     * This method does a request to the server to retrieve the list of possible problems
+     * It then displays the items on a listview in the order of retrieval
+     * @param request
+     */
+    private void listItemsOnListView(Request request) {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -76,32 +142,7 @@ public class ProblemSelectActivity extends AppCompatActivity {
                                     android.R.layout.simple_list_item_multiple_choice,
                                     problems
                             );
-
                             listView.setAdapter(adapter);
-
-                            //getCheckedItems
-
-                            doneBtn = findViewById(R.id.doneBtn);
-                            doneBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    // TODO: write some code here
-                                }
-                            });
-
-                            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                @Override
-                                public boolean onQueryTextSubmit(String query) {
-                                    ProblemSelectActivity.this.adapter.getFilter().filter(query);
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onQueryTextChange(String newText) {
-                                    ProblemSelectActivity.this.adapter.getFilter().filter(newText);
-                                    return false;
-                                }
-                            });
                         }else{
                             Toast.makeText(ProblemSelectActivity.this, items.getString("message"), Toast.LENGTH_SHORT).show();
                         }
