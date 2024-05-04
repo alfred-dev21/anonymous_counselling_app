@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -74,9 +76,21 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             assert response.body() != null;
                             String responseBody = response.body().string();
+                            JSONObject items = new JSONObject(responseBody);
 
-                            Toast.makeText(RegisterActivity.this, responseBody, Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
+                            String result = items.getString("result");
+                            JSONObject data = new JSONObject(items.getString("data"));
+
+                            if (result.equals("Success")){
+                                Toast.makeText(RegisterActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(RegisterActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
                     });
@@ -91,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
         return  !username.isEmpty() &&
                 !email.isEmpty() &&
                 !password.isEmpty() &&
-                r1.isChecked() || r2.isChecked();
+                (r1.isChecked() || r2.isChecked());
     }
 
     public void toLoginScreen(View view) {
