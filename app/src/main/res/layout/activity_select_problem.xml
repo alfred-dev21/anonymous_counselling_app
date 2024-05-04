@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg3"
+    tools:context=".ProblemSelectActivity">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:queryHint="Search problem"
+        android:background="@drawable/rounded_corner"
+        app:iconifiedByDefault="false"
+        android:layout_margin="4sp"
+        android:elevation="10sp">
+
+    </androidx.appcompat.widget.SearchView>
+
+    <ListView
+        android:id="@+id/list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:choiceMode="multipleChoice"
+        android:scrollbars="vertical"
+        android:background="@drawable/rounded_corner"
+        >
+
+    </ListView>
+
+</LinearLayout>

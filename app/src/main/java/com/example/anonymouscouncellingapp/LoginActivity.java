@@ -9,10 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -81,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (result.equals("Success")){
                                 Toast.makeText(LoginActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, ProblemSelectActivity.class);
 
                                 startActivity(intent);
                                 finish();

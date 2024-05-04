@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:layout_marginHorizontal="50sp"
-        android:layout_marginVertical="70sp"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginVertical="10sp"
         android:background="@drawable/rounded_corner">
 
         <TextView
@@ -32,8 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_heading"
-            android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="154dp"
             android:text="Login to your account and receive
  or give anonymous counselling"
             android:textAlignment="center"
@@ -79,19 +79,19 @@
             android:id="@+id/forgot_pass_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/client_password"
+            android:layout_below="@+id/login_button"
             android:layout_marginVertical="30sp"
             android:layout_marginStart="20sp"
-            android:layout_marginTop="61dp"
+            android:layout_marginTop="60dp"
             android:text="Don't have an account?"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/client_password"
+            android:layout_below="@id/login_button"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="30sp"
             android:layout_marginStart="13dp"
@@ -108,14 +108,14 @@
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="48sp"
-            android:layout_below="@+id/forgot_pass_tag"
+            android:layout_below="@+id/client_password"
             android:layout_marginHorizontal="25sp"
-            android:layout_marginTop="30sp"
+            android:layout_marginTop="56dp"
             android:backgroundTint="@color/wave"
+            android:onClick="loginUser"
             android:text="Sign in"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:onClick="loginUser"/>
+            android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>
