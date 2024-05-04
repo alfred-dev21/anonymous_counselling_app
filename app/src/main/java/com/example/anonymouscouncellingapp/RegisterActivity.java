@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         boolean isValid = validateData(text_username, text_email, text_password);
 
         if (isValid){
-            String userType = (r1.isChecked())? "client":"counselor";
+            String userType = (r1.isChecked()) ? "client": "counselor";
 
             RequestBody requestBody = new FormBody.Builder()
                     .add("username", text_username)
@@ -82,11 +82,16 @@ public class RegisterActivity extends AppCompatActivity {
                     });
                 }
             });
+        }else{
+            Toast.makeText(this, "Kindly fill and select all the required fields", Toast.LENGTH_SHORT).show();
         }
     }
 
     private boolean validateData(String username, String email, String password) {
-        return !username.isEmpty() && !email.isEmpty() && !password.isEmpty();
+        return  !username.isEmpty() &&
+                !email.isEmpty() &&
+                !password.isEmpty() &&
+                r1.isChecked() || r2.isChecked();
     }
 
     public void toLoginScreen(View view) {

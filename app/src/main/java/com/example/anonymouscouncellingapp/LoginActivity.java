@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -70,8 +73,24 @@ public class LoginActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         try {
                             assert response.body() != null;
-                            Toast.makeText(LoginActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
+                            String responseBody = response.body().string();
+                            JSONObject items = new JSONObject(responseBody);
+
+                            String result = items.getString("result");
+                            JSONObject data = new JSONObject(items.getString("data"));
+
+                            if (result.equals("Success")){
+                                Toast.makeText(LoginActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(LoginActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
                     });
