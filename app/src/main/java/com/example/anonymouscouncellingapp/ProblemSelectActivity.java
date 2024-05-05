@@ -136,7 +136,7 @@ public class ProblemSelectActivity extends AppCompatActivity {
                             Toast.makeText(ProblemSelectActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
 
                             Intent intent;
-                            if (UserDetails.username.equals("client")){
+                            if (UserDetails.user_type.equals("client")){
                                 intent = new Intent(ProblemSelectActivity.this, clientHomeActivity.class);
                             }else{
                                 intent = new Intent(ProblemSelectActivity.this, CounselorHomeActivity.class);

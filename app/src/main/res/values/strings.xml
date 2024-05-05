@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Anonymous Councelling App</string>
+    <string name="app_name">Anonymous Counselling App</string>
+    <string name="open_nav">Open Navigation Bar</string>
+    <string name="close_nav">Open Navigation Bar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

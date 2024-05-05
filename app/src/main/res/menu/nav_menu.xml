@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:title="Main"
+        >
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/home_menuItem"
+                    android:title="Home"
+                    android:icon="@drawable/home_icon"
+                    />
+
+                <item
+                    android:id="@+id/profile_menuItem"
+                    android:title="Profile"
+                    android:icon="@drawable/profile_icon"
+                    />
+
+                <item
+                    android:id="@+id/share_menuItem"
+                    android:title="Share"
+                    android:icon="@drawable/share_icon"
+                    />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/setting_menuItem"
+                android:title="Settings"
+                android:icon="@drawable/settings_icon"
+                />
+        </menu>
+    </item>
+
+    <item android:title="General">
+        <menu>
+            <item
+                android:title="Terms and Conditions"
+                android:id="@+id/t_and_c"
+                android:icon="@drawable/t_and_c_icon"
+                />
+
+            <item
+                android:title="About"
+                android:id="@+id/about_menuItem"
+                android:icon="@drawable/about_icon"
+                />
+        </menu>
+    </item>
+
+    <item
+        android:title="Logout"
+        android:icon="@drawable/logout_icon"
+        android:id="@+id/logout_menuItem"/>
+</menu>
