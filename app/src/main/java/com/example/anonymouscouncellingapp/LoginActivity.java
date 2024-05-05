@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.anonymouscouncellingapp.details.UserDetails;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -72,12 +74,19 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             assert response.body() != null;
                             String responseBody = response.body().string();
+                            System.out.println(responseBody);
                             JSONObject items = new JSONObject(responseBody);
 
                             String result = items.getString("result");
                             JSONObject data = new JSONObject(items.getString("data"));
 
                             if (result.equals("Success")){
+                                JSONObject details = data.getJSONObject("0");
+
+                                UserDetails.user_id = details.getString("user_id");
+                                UserDetails.user_type = details.getString("user_type");
+                                UserDetails.username = details.getString("username");
+
                                 Toast.makeText(LoginActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, ProblemSelectActivity.class);
 

@@ -1,6 +1,7 @@
 package com.example.anonymouscouncellingapp;
 
 import static com.example.anonymouscouncellingapp.links.Links.PROBLEMS_PHP;
+import static com.example.anonymouscouncellingapp.links.Links.SAVE_PROBLEMS_PHP;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,11 +10,14 @@ import androidx.appcompat.widget.SearchView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.anonymouscouncellingapp.clientui.clientHomeActivity;
+import com.example.anonymouscouncellingapp.counselorui.CounselorHomeActivity;
+import com.example.anonymouscouncellingapp.details.UserDetails;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,7 +36,7 @@ import okhttp3.Response;
 public class ProblemSelectActivity extends AppCompatActivity {
     SearchView searchView;
     ListView listView;
-    ArrayList<String> problems;
+    ArrayList<String> problems, problems_ids;
     ArrayAdapter<String> adapter;
     OkHttpClient client;
     Button doneBtn;
@@ -46,6 +50,7 @@ public class ProblemSelectActivity extends AppCompatActivity {
         searchView = findViewById(R.id.searchBar);
         listView = findViewById(R.id.list_item);
         problems = new ArrayList<>();
+        problems_ids = new ArrayList<>();
         doneBtn = findViewById(R.id.doneBtn);
 
         Request request = new Request.Builder()
@@ -68,23 +73,87 @@ public class ProblemSelectActivity extends AppCompatActivity {
      * @param adapter
      */
     private void saveCheckedUserItems(ListView listView, ArrayAdapter<String> adapter) {
-        FormBody.Builder formbuilder = new FormBody.Builder();
+        FormBody.Builder formBuilder = new FormBody.Builder();
 
+        StringBuilder sqlQuery = new StringBuilder("INSERT INTO userProblem (user_id, problem_id) VALUES");
         SparseBooleanArray checked = listView.getCheckedItemPositions();
+
         for (int i = 0; i < checked.size(); i++){
             if (checked.valueAt(i)){
-                formbuilder.add(String.valueOf(i), adapter.getItem(checked.keyAt(i)));
+                String item = adapter.getItem(checked.keyAt(i));
+                int itemIndex = problems.indexOf(item);
+
+                if (i == checked.size() - 1){
+                    sqlQuery.append(" (")
+                            .append(UserDetails.user_id)
+                            .append(",")
+                            .append(problems_ids.get(itemIndex))
+                            .append(")");
+                    break;
+                }
+
+
+                sqlQuery.append(" (")
+                        .append(UserDetails.user_id)
+                        .append(",")
+                        .append(problems_ids.get(itemIndex))
+                        .append("), ");
             }
         }
 
-        RequestBody requestBody = formbuilder.build();
+        formBuilder.add("user_id", UserDetails.user_id);
+        formBuilder.add("query", sqlQuery.toString());
+        RequestBody requestBody = formBuilder.build();
 
         Request request = new Request.Builder()
-                .url("#")
+                .url(SAVE_PROBLEMS_PHP)
                 .post(requestBody)
                 .build();
 
-        // TODO: create a php file that will store these items in a database
+        sendSaveRequest(request);
+    }
+
+    private void sendSaveRequest(Request request) {
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                runOnUiThread(() -> {
+                    try {
+                        assert response.body() != null;
+                        String responseBody = response.body().string();
+                        System.out.println(responseBody);
+                        JSONObject items = new JSONObject(responseBody);
+
+                        String result = items.getString("result");
+                        JSONObject data = new JSONObject(items.getString("data"));
+
+                        if (result.equals("Success")){
+                            Toast.makeText(ProblemSelectActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            Intent intent;
+                            if (UserDetails.username.equals("client")){
+                                intent = new Intent(ProblemSelectActivity.this, clientHomeActivity.class);
+                            }else{
+                                intent = new Intent(ProblemSelectActivity.this, CounselorHomeActivity.class);
+                            }
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Toast.makeText(ProblemSelectActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -135,6 +204,7 @@ public class ProblemSelectActivity extends AppCompatActivity {
                             for (int i = 0; i < dataArray.length(); i++){
                                 JSONObject data = dataArray.getJSONObject(i);
                                 problems.add(data.getString("problem_description"));
+                                problems_ids.add(data.getString("problem_id"));
                             }
 
                             adapter = new ArrayAdapter<>(
