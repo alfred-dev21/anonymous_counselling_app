@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.anonymouscouncellingapp.details.UserDetails;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (!username.isEmpty() && !password.isEmpty()){
             RequestBody requestBody = new FormBody.Builder()
+                    .add("type", "login")
                     .add("username", username)
                     .add("password", password)
                     .build();
@@ -62,47 +64,66 @@ public class LoginActivity extends AppCompatActivity {
                     .post(requestBody)
                     .build();
 
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    e.printStackTrace();
-                }
+            sendLoginRequest(request);
+        }
+    }
 
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    runOnUiThread(() -> {
-                        try {
-                            assert response.body() != null;
-                            String responseBody = response.body().string();
-                            System.out.println(responseBody);
-                            JSONObject items = new JSONObject(responseBody);
+    private void sendLoginRequest(Request request) {
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
 
-                            String result = items.getString("result");
-                            JSONObject data = new JSONObject(items.getString("data"));
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                try {
+                    assert response.body() != null;
+                    String responseBody = response.body().string();
+                    System.out.println(responseBody);
+                    JSONObject items = new JSONObject(responseBody);
 
-                            if (result.equals("Success")){
-                                JSONObject details = data.getJSONObject("0");
+                    String result = items.getString("result");
+                    JSONObject data = new JSONObject(items.getString("data"));
 
-                                UserDetails.user_id = details.getString("user_id");
-                                UserDetails.user_type = details.getString("user_type");
-                                UserDetails.username = details.getString("username");
+                    if (result.equals("Success")){
+                        setUserDetails(data.getJSONObject("0"));
 
+                        runOnUiThread(() -> {
+                            try {
                                 Toast.makeText(LoginActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+
                                 Intent intent = new Intent(LoginActivity.this, ProblemSelectActivity.class);
 
                                 startActivity(intent);
                                 finish();
-                            }else{
-                                Toast.makeText(LoginActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
                             }
 
+                        });
+                    }else{
+                        runOnUiThread(() -> {
+                            try {
+                                Toast.makeText(LoginActivity.this, data.getString("message"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    }
 
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
-            });
-        }
+            }
+        });
+    }
+
+    private void setUserDetails(JSONObject details) throws JSONException {
+        UserDetails.user_id = details.getString("user_id");
+        UserDetails.user_type = details.getString("user_type");
+        UserDetails.username = details.getString("username");
     }
 }

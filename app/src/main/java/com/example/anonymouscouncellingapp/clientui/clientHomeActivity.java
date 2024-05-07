@@ -95,6 +95,7 @@ public class clientHomeActivity extends AppCompatActivity implements NavigationV
             case R.id.logout_menuItem:
                 Intent intent = new Intent(clientHomeActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 return false;
