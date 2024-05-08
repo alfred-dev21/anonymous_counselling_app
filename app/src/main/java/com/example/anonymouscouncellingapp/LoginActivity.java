@@ -1,6 +1,5 @@
 package com.example.anonymouscouncellingapp;
 
-import static com.example.anonymouscouncellingapp.links.Links.LOGIN_PHP;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.anonymouscouncellingapp.details.UserDetails;
+import com.example.anonymouscouncellingapp.links.Links;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     .build();
 
             Request request = new Request.Builder()
-                    .url(LOGIN_PHP)
+                    .url(Links.MAIN_PHP)
                     .post(requestBody)
                     .build();
 

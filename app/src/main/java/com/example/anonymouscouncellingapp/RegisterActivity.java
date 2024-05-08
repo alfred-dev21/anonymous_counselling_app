@@ -1,6 +1,5 @@
 package com.example.anonymouscouncellingapp;
 
-import static com.example.anonymouscouncellingapp.links.Links.REGISTER_PHP;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.anonymouscouncellingapp.links.Links;
 
 import org.json.JSONObject;
 
@@ -54,13 +55,14 @@ public class RegisterActivity extends AppCompatActivity {
             String userType = (r1.isChecked()) ? "client": "counselor";
 
             RequestBody requestBody = new FormBody.Builder()
+                    .add("type", "register")
                     .add("username", text_username)
                     .add("password", text_password)
                     .add("usertype", userType)
                     .build();
 
             Request request = new Request.Builder()
-                    .url(REGISTER_PHP)
+                    .url(Links.MAIN_PHP)
                     .post(requestBody)
                     .build();
 
